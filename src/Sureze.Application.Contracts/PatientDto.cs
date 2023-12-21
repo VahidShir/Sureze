@@ -1,32 +1,34 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-using Volo.Abp.Domain.Entities;
+namespace Sureze;
 
-namespace Sureze.Patients;
-
-public class Patient : AggregateRoot<long>
+public class PatientDto
 {
     public Title Title { get; set; }
 
-    public string Suffix { get; set;}
+    [MaxLength(50)]
+    public string Suffix { get; set; }
 
-    //[required]
-    public string FirstName { get; set;}
+    [Required]
+    public string FirstName { get; set; }
 
-    public string LastName { get; set;}
-
-    //need to know business: is the type number or string?
-    public string NationalIdNumber { get; set;}
-
-    public AlternateIdType AlternateIdType { get; set;}
+    [MaxLength(200)]
+    public string LastName { get; set; }
 
     //need to know business: is the type number or string?
-    public string AlternateIdNumber { get; set;}
+    public string NationalIdNumber { get; set; }
+
+    public AlternateIdType AlternateIdType { get; set; }
+
+    //need to know business: is the type number or string?
+    public string AlternateIdNumber { get; set; }
 
     public DateTime? DateOfBirth { get; set; }
 
     public Sex Sex { get; set; }
 
+    [Required]
     public Race Race { get; set; }
 
     public Language Language { get; set; }
@@ -37,6 +39,7 @@ public class Patient : AggregateRoot<long>
 
     public string Nationality { get; set; }
 
+    [Required]
     public bool Citizen { get; set; }
 
     public Religion Religion { get; set; }

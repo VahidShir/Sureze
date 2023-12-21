@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
+
 using Sureze.Localization;
 using Sureze.MultiTenancy;
+
 using Volo.Abp.Identity.Blazor;
 using Volo.Abp.SettingManagement.Blazor.Menus;
 using Volo.Abp.TenantManagement.Blazor.Navigation;
@@ -27,12 +29,32 @@ public class SurezeMenuContributor : IMenuContributor
             0,
             new ApplicationMenuItem(
                 SurezeMenus.Home,
-                l["Menu:Home"],
+                l["Home"],
                 "/",
                 icon: "fas fa-home",
                 order: 0
             )
         );
+
+        context.Menu.AddGroup(
+                new ApplicationMenuGroup(
+                    name: "Patients",
+                    displayName: l["Patients"]
+                )
+            );
+
+            context.Menu.AddItem(
+                new ApplicationMenuItem("Patients", l["Patients"], groupName: "Patients")
+                    .AddItem(new ApplicationMenuItem(
+                        name: "PatientsList", 
+                        displayName: l["Patients List"], 
+                        url: "/Patients")
+                    ).AddItem(new ApplicationMenuItem(
+                        name: "RegisterPatient", 
+                        displayName: l["Register Patient"],
+                        url: "/RegisterPatient")
+                     )
+            );  
 
         if (MultiTenancyConsts.IsEnabled)
         {
