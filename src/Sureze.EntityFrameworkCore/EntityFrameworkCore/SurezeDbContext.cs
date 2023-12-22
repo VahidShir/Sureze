@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
+using Sureze.Patients;
+
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -24,6 +28,8 @@ public class SurezeDbContext :
     ITenantManagementDbContext
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
+
+    public DbSet<Patient> Patients { get; set; }
 
     #region Entities from the modules
 
@@ -76,11 +82,11 @@ public class SurezeDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(SurezeConsts.DbTablePrefix + "YourEntities", SurezeConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<Patient>(b =>
+        {
+            b.ToTable("patients");
+            b.ConfigureByConvention(); //auto configure for the base class props
+            //...
+        });
     }
 }

@@ -43,18 +43,18 @@ public class SurezeMenuContributor : IMenuContributor
                 )
             );
 
-            context.Menu.AddItem(
-                new ApplicationMenuItem("Patients", l["Patients"], groupName: "Patients")
-                    .AddItem(new ApplicationMenuItem(
-                        name: "PatientsList", 
-                        displayName: l["Patients List"], 
-                        url: "/Patients")
-                    ).AddItem(new ApplicationMenuItem(
-                        name: "RegisterPatient", 
-                        displayName: l["Register Patient"],
-                        url: "/RegisterPatient")
-                     )
-            );  
+        context.Menu.AddItem(
+            new ApplicationMenuItem("Patients", l["Patients"], groupName: "Patients", icon: "fas fa-hospital")
+                .AddItem(new ApplicationMenuItem(
+                    name: "PatientsList",
+                    displayName: l["Patients List"],
+                    url: "/Patients")
+                ).AddItem(new ApplicationMenuItem(
+                    name: "RegisterPatient",
+                    displayName: l["Register Patient"],
+                    url: "/RegisterPatient")
+                 )
+        );
 
         if (MultiTenancyConsts.IsEnabled)
         {

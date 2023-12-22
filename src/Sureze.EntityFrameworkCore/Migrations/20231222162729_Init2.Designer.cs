@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sureze.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Sureze.Migrations
 {
     [DbContext(typeof(SurezeDbContext))]
-    partial class SurezeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231222162729_Init2")]
+    partial class Init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +33,7 @@ namespace Sureze.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("AlternateIdNumber")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("AlternateIdType")
@@ -60,27 +64,32 @@ namespace Sureze.Migrations
                         .HasColumnName("ExtraProperties");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Language")
                         .HasColumnType("integer");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("MaritalStatus")
                         .HasColumnType("integer");
 
                     b.Property<string>("NationalIdNumber")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Nationality")
                         .HasColumnType("integer");
 
                     b.Property<string>("PatientCategory")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Race")
@@ -93,6 +102,7 @@ namespace Sureze.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Suffix")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Title")

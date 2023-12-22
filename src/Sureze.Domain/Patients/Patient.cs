@@ -4,24 +4,36 @@ using Volo.Abp.Domain.Entities;
 
 namespace Sureze.Patients;
 
-public class Patient : AggregateRoot<long>
+public class Patient : AggregateRoot<Guid>
 {
+    protected Patient()
+    {
+
+    }
+
+    public Patient(Guid id , string firstName, Race race, bool citizen) : base(id)
+    {
+        FirstName = firstName;
+        Race = race;
+        Citizen = citizen;
+    }
+
     public Title Title { get; set; }
 
-    public string Suffix { get; set;}
+    public string Suffix { get; set; }
 
     //[required]
-    public string FirstName { get; set;}
+    public string FirstName { get; set; }
 
-    public string LastName { get; set;}
-
-    //need to know business: is the type number or string?
-    public string NationalIdNumber { get; set;}
-
-    public AlternateIdType AlternateIdType { get; set;}
+    public string LastName { get; set; }
 
     //need to know business: is the type number or string?
-    public string AlternateIdNumber { get; set;}
+    public string NationalIdNumber { get; set; }
+
+    public AlternateIdType AlternateIdType { get; set; }
+
+    //need to know business: is the type number or string?
+    public string AlternateIdNumber { get; set; }
 
     public DateTime? DateOfBirth { get; set; }
 
@@ -35,7 +47,7 @@ public class Patient : AggregateRoot<long>
 
     public EducationLevel EducationLevel { get; set; }
 
-    public string Nationality { get; set; }
+    public Country Nationality { get; set; }
 
     public bool Citizen { get; set; }
 
