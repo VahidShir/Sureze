@@ -10,7 +10,7 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Guids;
 using Volo.Abp.Uow;
 
-namespace Sureze.Patients;
+namespace Sureze;
 
 public class PatientsDataSeederContributor : IDataSeedContributor, ITransientDependency
 {

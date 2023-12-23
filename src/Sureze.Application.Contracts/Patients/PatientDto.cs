@@ -1,30 +1,21 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-using Volo.Abp.Domain.Entities;
+using Volo.Abp.Application.Dtos;
 
 namespace Sureze;
 
-public class Patient : AggregateRoot<Guid>
+public class PatientDto : EntityDto<Guid>
 {
-    protected Patient()
-    {
-
-    }
-
-    public Patient(Guid id , string firstName, Race race, bool citizen) : base(id)
-    {
-        FirstName = firstName;
-        Race = race;
-        Citizen = citizen;
-    }
-
     public Title Title { get; set; }
 
+    [MaxLength(50)]
     public string Suffix { get; set; }
 
-    //[required]
+    [Required]
     public string FirstName { get; set; }
 
+    [MaxLength(200)]
     public string LastName { get; set; }
 
     //need to know business: is the type number or string?
@@ -39,6 +30,7 @@ public class Patient : AggregateRoot<Guid>
 
     public Sex Sex { get; set; }
 
+    [Required]
     public Race Race { get; set; }
 
     public Language Language { get; set; }
@@ -47,8 +39,9 @@ public class Patient : AggregateRoot<Guid>
 
     public EducationLevel EducationLevel { get; set; }
 
-    public Country Nationality { get; set; }
+    public string Nationality { get; set; }
 
+    [Required]
     public bool Citizen { get; set; }
 
     public Religion Religion { get; set; }

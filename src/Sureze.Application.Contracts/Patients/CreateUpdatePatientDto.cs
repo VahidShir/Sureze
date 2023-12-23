@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Sureze;
 
-public class PatientDto
+public class CreateUpdatePatientDto
 {
     public Title Title { get; set; }
 
