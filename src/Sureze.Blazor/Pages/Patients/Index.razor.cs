@@ -3,14 +3,11 @@ using Blazorise.DataGrid;
 
 using Microsoft.AspNetCore.Components;
 
-using NUglify.Helpers;
+using Sureze.Patients;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 using Volo.Abp.Application.Dtos;
@@ -34,7 +31,7 @@ public partial class Index : SurezeComponentBase
 
     private string CurrentSorting { get; set; }
 
-    private string CurrentFilter { get; set; }
+    private PatientFilter CurrentFilter { get; set; } = new PatientFilter();
 
     private int TotalCount { get; set; }
 
@@ -53,12 +50,13 @@ public partial class Index : SurezeComponentBase
     private async Task GetPatientsAsync()
     {
         var result = await PatientsService.GetListAsync(
-            new()
+            new PagedAndSortedAndFilteredResultRequestDto()
             {
-                
+
                 MaxResultCount = PageSize,
                 SkipCount = CurrentPage * PageSize,
-                Sorting = CurrentSorting
+                Sorting = CurrentSorting,
+                PatientFilter = CurrentFilter,
             }
         );
 
@@ -73,10 +71,31 @@ public partial class Index : SurezeComponentBase
             .Select(c => c.SortField + (c.SortDirection == SortDirection.Descending ? " DESC" : ""))
             .JoinAsString(",");
 
-        //CurrentFilter = e.Columns
-        //    .Where(c => string.IsNullOrWhiteSpace(c.SearchValue?.ToString()) )
-        //    .Select(c =>  $"{c.SortField} == " )
-        //    .JoinAsString(",");
+        foreach (var column in e.Columns)
+        {
+            string searchValue = column.SearchValue?.ToString();
+
+            if (column.SortField == nameof(PatientDto.FirstName))
+            {
+                CurrentFilter.FullName = searchValue;
+            }
+            if (column.SortField == nameof(PatientDto.DateOfBirth))
+            {
+                CurrentFilter.DateOfBirth = searchValue.IsNullOrWhiteSpace() ? null : DateTime.Parse(searchValue);
+            }
+            if (column.SortField == nameof(PatientDto.Sex))
+            {
+                CurrentFilter.Sex = searchValue;
+            }
+            if (column.SortField == nameof(PatientDto.NationalIdNumber))
+            {
+                CurrentFilter.NationalIdNumber = searchValue;
+            }
+            if (column.SortField == nameof(PatientDto.Nationality))
+            {
+                CurrentFilter.Nationality = searchValue;
+            }
+        }
 
         CurrentPage = e.Page - 1;
 
