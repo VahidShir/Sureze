@@ -1,4 +1,118 @@
 ﻿@page "/Patients"
 @inherits SurezeComponentBase
 
-<h1>Patients</h1>
+<Card>
+    <Bar Breakpoint="Breakpoint.Desktop"
+         Gap="Gap.Is3"
+         Padding="Padding.Is2"
+         ThemeContrast="ThemeContrast.None">
+        <BarToggler />
+        <BarMenu Gap="Gap.Is1">
+            <BarItem>
+                <BarLink To="/">Home</BarLink>
+            </BarItem>
+            /
+            <BarItem>
+                <BarLink To="#">Patients</BarLink>
+            </BarItem>
+            /
+            <BarItem>
+                <BarLink To="/Patients">Patient List</BarLink>
+            </BarItem>
+        </BarMenu>
+    </Bar>
+</Card>
+
+<Row>
+    <Column ColumnSize="ColumnSize.IsFull">
+        <Card>
+            <CardHeader>
+                <Row Class="justify-content-between">
+                    <Column ColumnSize="ColumnSize.IsAuto">
+                        <h2>@L["Patients"]</h2>
+                    </Column>
+                    <Column ColumnSize="ColumnSize.IsAuto">
+                        <Button Color="Color.Secondary" Type="ButtonType.Link" To="/RegisterPatient" Outline>New Patient</Button>
+                        @* <Link Type="ButtonType.Link" To="/RegisterPatient" Outline>New Patient</Link> *@
+                    </Column>
+                </Row>
+            </CardHeader>
+            <CardBody>
+
+                <Row Flex="Flex.AlignItems.Center">
+                    <Column>
+                        <TextEdit Placeholder="Serach Patient..." />
+                    </Column>
+
+                    <Column>
+                        <Check TValue="bool" @bind-Checked="@AdvancedSearch">Advanced Search</Check>
+                    </Column>
+                </Row>
+
+                <DataGrid TItem="PatientDto"
+                          Data="Patients"
+                          @ref="DataGrid"
+                          FixedColumns="true"
+                          ReadData="OnDataGridReadAsync"
+                          TotalItems="TotalCount"
+                          ShowPager="true"
+                          Sortable="true"
+                          Filter
+                          FilteredDataChanged="OnFilteredDataChanged"
+                          Filterable="@AdvancedSearch"
+                          @bind-PageSize="@PageSize"
+                          ShowPageSizes="true">
+                    <DataGridColumns>
+                        <DataGridColumn TItem="PatientDto"
+                                        Field="@nameof(PatientDto.FullName)"
+                                        Caption="Name"
+                                        Filterable="true"
+                                        FilterMethod="DataGridColumnFilterMethod.Contains"
+                                        SortField="@nameof(PatientDto.FirstName)">
+                            <DisplayTemplate>
+                                @if (string.IsNullOrWhiteSpace(context.ProfilePictureUrl))
+                                {
+                                    <Image Source="@(context.Sex == Sex.Male ? "images/default_profile_man.png" : "images/default_profile_woman.png")" Width="Width.Is25" Margin="Margin.Is1" Text="default profile picture"></Image>
+                                }
+                                else
+                                {
+                                    <Image Source="@context.ProfilePictureUrl" Width="Width.Is25" Margin="Margin.Is1" Text="user's' profile picture"></Image>
+                                }
+
+                                @context.FullName
+                            </DisplayTemplate>
+                        </DataGridColumn>
+
+                        <DataGridColumn TItem="PatientDto"
+                                        Field="@nameof(PatientDto.DateOfBirth)"
+                                        Caption="D.o.B">
+                        </DataGridColumn>
+
+                        <DataGridColumn TItem="PatientDto"
+                                        Field="@nameof(PatientDto.NationalIdNumber)"
+                                        FilterMethod="DataGridColumnFilterMethod.Contains"
+                                        Filterable="true"
+                                        Caption="ID. Number">
+                        </DataGridColumn>
+
+                        <DataGridColumn TItem="PatientDto"
+                                        Filterable="true"
+                                        Field="@nameof(PatientDto.Sex)"
+                                        Caption="Sex">
+                        </DataGridColumn>
+
+                        <DataGridColumn TItem="PatientDto"
+                                        Filterable="true"
+                                        Field="@nameof(PatientDto.Nationality)"
+                                        Caption="Nationality">
+                            <DisplayTemplate>
+                                @context.Nationality.GetDisplayName()
+                            </DisplayTemplate>
+                        </DataGridColumn>
+
+                    </DataGridColumns>
+                </DataGrid>
+            </CardBody>
+        </Card>
+    </Column>
+</Row>

@@ -18,6 +18,8 @@ public class PatientDto : EntityDto<Guid>
     [MaxLength(200)]
     public string LastName { get; set; }
 
+    public string FullName => $"{FirstName} {LastName}";
+
     //need to know business: is the type number or string?
     public string NationalIdNumber { get; set; }
 
@@ -39,7 +41,7 @@ public class PatientDto : EntityDto<Guid>
 
     public EducationLevel EducationLevel { get; set; }
 
-    public string Nationality { get; set; }
+    public Country Nationality { get; set; }
 
     [Required]
     public bool Citizen { get; set; }
