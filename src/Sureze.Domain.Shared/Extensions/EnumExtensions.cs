@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Sureze.Blazor.Extensions;
+namespace Sureze.Extensions;
 
 public static class EnumExtensions
 {
@@ -11,7 +11,7 @@ public static class EnumExtensions
     {
         return enumValue.GetType()
                         .GetMember(enumValue.ToString())
-                        .First()
+                        .First()?
                         .GetCustomAttribute<DisplayAttribute>()?
                         .GetName();
     }

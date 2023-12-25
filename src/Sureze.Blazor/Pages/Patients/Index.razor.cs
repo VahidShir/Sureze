@@ -19,13 +19,15 @@ public partial class Index : SurezeComponentBase
     [Inject]
     public IPatientsService PatientsService { get; set; }
 
-    private DataGrid<PatientDto> DataGrid { get; set; }
+    private DataGrid<PatientDto> _dataGrid;
 
     public IReadOnlyList<PatientDto> Patients { get; set; }
 
     private int PageSize { get; set; } = LimitedResultRequestDto.DefaultMaxResultCount;
 
     private int CurrentPage { get; set; }
+
+    private string _globalPatientNameFilterValue;
 
     private bool AdvancedSearch { get; set; }
 
@@ -73,11 +75,18 @@ public partial class Index : SurezeComponentBase
 
         foreach (var column in e.Columns)
         {
-            string searchValue = column.SearchValue?.ToString();
+            string searchValue = column.SearchValue?.ToString().Trim();
 
             if (column.SortField == nameof(PatientDto.FirstName))
             {
-                CurrentFilter.FullName = searchValue;
+                if (searchValue is null)
+                {
+                    CurrentFilter.FullName = _globalPatientNameFilterValue;
+                }
+                else
+                {
+                    CurrentFilter.FullName = searchValue;
+                }
             }
             if (column.SortField == nameof(PatientDto.DateOfBirth))
             {
@@ -104,8 +113,19 @@ public partial class Index : SurezeComponentBase
         await InvokeAsync(StateHasChanged);
     }
 
-    private void OnFilteredDataChanged(DataGridFilteredDataEventArgs<PatientDto> e)
+    private Task OnCustomFilterValueChanged(string e)
     {
-        var test = DataGrid;
+        _globalPatientNameFilterValue = e;
+        return _dataGrid.Reload();
+    }
+
+    private bool OnCustomFilter(PatientDto model)
+    {
+        // We want to accept empty value as valid or otherwise
+        // datagrid will not show anything.
+        if (_globalPatientNameFilterValue.IsNullOrWhiteSpace())
+            return true;
+
+        return model.FullName?.Contains(_globalPatientNameFilterValue, StringComparison.OrdinalIgnoreCase) == true;
     }
 }

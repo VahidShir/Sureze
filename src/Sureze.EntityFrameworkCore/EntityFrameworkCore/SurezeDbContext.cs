@@ -84,6 +84,17 @@ public class SurezeDbContext :
         {
             b.ToTable("patients");
             b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(e => e.Sex).HasConversion<string>();
+            b.Property(e => e.Title).HasConversion<string>();
+            b.Property(e => e.AlternateIdType).HasConversion<string>();
+            b.Property(e => e.Sex).HasConversion<string>();
+            b.Property(e => e.Race).HasConversion<string>();
+            b.Property(e => e.Language).HasConversion<string>();
+            b.Property(e => e.Ethnicity).HasConversion<string>();
+            b.Property(e => e.EducationLevel).HasConversion<string>();
+            b.Property(e => e.Nationality).HasConversion<string>();
+            b.Property(e => e.Religion).HasConversion<string>();
+            b.Property(e => e.MaritalStatus).HasConversion<string>();
             //...
         });
     }

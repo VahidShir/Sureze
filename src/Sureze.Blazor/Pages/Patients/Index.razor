@@ -41,7 +41,7 @@
 
                 <Row Flex="Flex.AlignItems.Center">
                     <Column>
-                        <TextEdit Placeholder="Serach Patient..." />
+                        <TextEdit Text="@_globalPatientNameFilterValue" TextChanged="@OnCustomFilterValueChanged" Placeholder="Serach Patient..." />
                     </Column>
 
                     <Column>
@@ -51,14 +51,12 @@
 
                 <DataGrid TItem="PatientDto"
                           Data="Patients"
-                          @ref="DataGrid"
+                          @ref="_dataGrid"
                           FixedColumns="true"
                           ReadData="OnDataGridReadAsync"
                           TotalItems="TotalCount"
                           ShowPager="true"
                           Sortable="true"
-                          Filter
-                          FilteredDataChanged="OnFilteredDataChanged"
                           Filterable="@AdvancedSearch"
                           @bind-PageSize="@PageSize"
                           ShowPageSizes="true">

@@ -24,7 +24,7 @@ namespace Sureze.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Sureze.Patients.Patient", b =>
+            modelBuilder.Entity("Sureze.Patient", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -32,8 +32,9 @@ namespace Sureze.Migrations
                     b.Property<string>("AlternateIdNumber")
                         .HasColumnType("text");
 
-                    b.Property<int>("AlternateIdType")
-                        .HasColumnType("integer");
+                    b.Property<string>("AlternateIdType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("Citizen")
                         .HasColumnType("boolean");
@@ -48,11 +49,13 @@ namespace Sureze.Migrations
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("EducationLevel")
-                        .HasColumnType("integer");
+                    b.Property<string>("EducationLevel")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("Ethnicity")
-                        .HasColumnType("integer");
+                    b.Property<string>("Ethnicity")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
@@ -62,20 +65,23 @@ namespace Sureze.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
-                    b.Property<int>("Language")
-                        .HasColumnType("integer");
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
-                    b.Property<int>("MaritalStatus")
-                        .HasColumnType("integer");
+                    b.Property<string>("MaritalStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("NationalIdNumber")
                         .HasColumnType("text");
 
-                    b.Property<int>("Nationality")
-                        .HasColumnType("integer");
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("PatientCategory")
                         .HasColumnType("text");
@@ -83,20 +89,24 @@ namespace Sureze.Migrations
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("text");
 
-                    b.Property<int>("Race")
-                        .HasColumnType("integer");
+                    b.Property<string>("Race")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("Religion")
-                        .HasColumnType("integer");
+                    b.Property<string>("Religion")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("Sex")
-                        .HasColumnType("integer");
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Suffix")
                         .HasColumnType("text");
 
-                    b.Property<int>("Title")
-                        .HasColumnType("integer");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

@@ -1,4 +1,5 @@
-﻿using Sureze.Patients;
+﻿using Sureze.Extensions;
+using Sureze.Patients;
 
 using System;
 using System.Collections.Generic;
@@ -36,17 +37,20 @@ public class PatientsService :
 
         PatientFilter filter = input.PatientFilter;
 
+        // normalize input
+        NormalizeInputFilter(filter);
+
         Expression<Func<Patient, bool>> fullNamePredicate = x =>
-                                x.FirstName.ToLower().Contains(filter.FullName.ToLower())
-                                || x.LastName.ToLower().Contains(filter.FullName.ToLower());
+                                x.FirstName.ToLower().Contains(filter.FullName)
+                                || x.LastName.ToLower().Contains(filter.FullName);
 
         // apply filter
         var query = queryable
                 .WhereIf(!filter.FullName.IsNullOrWhiteSpace(), fullNamePredicate)
                 .WhereIf(filter.DateOfBirth is not null, x => x.DateOfBirth == filter.DateOfBirth)
-                .WhereIf(filter.Sex is not null, x => x.Sex.ToString().Contains(filter.Sex, StringComparison.OrdinalIgnoreCase))
-                .WhereIf(filter.Nationality is not null, x => x.Nationality.ToString().Contains(filter.Nationality, StringComparison.OrdinalIgnoreCase))
-                .WhereIf(!filter.NationalIdNumber.IsNullOrWhiteSpace(), x => x.NationalIdNumber.Contains(filter.NationalIdNumber, StringComparison.OrdinalIgnoreCase));
+                .WhereIf(!filter.Sex.IsNullOrWhiteSpace(), x => SearchEnum<Sex>(filter.Nationality).Any( y => x.Sex  == y))
+                .WhereIf(!filter.Nationality.IsNullOrWhiteSpace(), x => SearchEnum<Country>(filter.Nationality).Any( y => x.Nationality  == y))
+                .WhereIf(!filter.NationalIdNumber.IsNullOrWhiteSpace(), x => x.NationalIdNumber.ToLower().Contains(filter.NationalIdNumber));
 
         // apply sorting
         if (!input.Sorting.IsNullOrWhiteSpace())
@@ -65,11 +69,25 @@ public class PatientsService :
         var patientDtos = queryResult.Select(p => ObjectMapper.Map<Patient, PatientDto>(p)).ToList();
 
         //Get the total count with another query
-        var totalCount = await Repository.GetCountAsync();
+        var totalCount = patientDtos.Count;
 
         return new PagedResultDto<PatientDto>(
             totalCount: totalCount,
             items: patientDtos
         );
+    }
+
+    private static void NormalizeInputFilter(PatientFilter filter)
+    {
+        filter.FullName = filter.FullName?.ToLower();
+        filter.Sex = filter.Sex?.ToLower();
+        filter.NationalIdNumber = filter.NationalIdNumber?.ToLower();
+        filter.Nationality = filter.Nationality?.ToLower();
+    }
+
+    private static List<T> SearchEnum<T>(string searchValue) where T : struct, Enum
+    {
+        var result = Enum.GetValues<T>().ToList().FindAll(c => c.GetDisplayName().ToLower().Contains(searchValue.ToLower()));
+        return result;
     }
 }

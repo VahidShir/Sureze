@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sureze.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -451,6 +451,38 @@ namespace Sureze.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OpenIddictScopes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "patients",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false),
+                    Suffix = table.Column<string>(type: "text", nullable: true),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    NationalIdNumber = table.Column<string>(type: "text", nullable: true),
+                    AlternateIdType = table.Column<string>(type: "text", nullable: false),
+                    AlternateIdNumber = table.Column<string>(type: "text", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Sex = table.Column<string>(type: "text", nullable: false),
+                    Race = table.Column<string>(type: "text", nullable: false),
+                    Language = table.Column<string>(type: "text", nullable: false),
+                    Ethnicity = table.Column<string>(type: "text", nullable: false),
+                    EducationLevel = table.Column<string>(type: "text", nullable: false),
+                    Nationality = table.Column<string>(type: "text", nullable: false),
+                    Citizen = table.Column<bool>(type: "boolean", nullable: false),
+                    Religion = table.Column<string>(type: "text", nullable: false),
+                    MaritalStatus = table.Column<string>(type: "text", nullable: false),
+                    PatientCategory = table.Column<string>(type: "text", nullable: true),
+                    ProfilePictureUrl = table.Column<string>(type: "text", nullable: true),
+                    ExtraProperties = table.Column<string>(type: "text", nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_patients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1083,6 +1115,9 @@ namespace Sureze.Migrations
 
             migrationBuilder.DropTable(
                 name: "OpenIddictTokens");
+
+            migrationBuilder.DropTable(
+                name: "patients");
 
             migrationBuilder.DropTable(
                 name: "AbpEntityChanges");
