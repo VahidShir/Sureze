@@ -20,6 +20,7 @@ public partial class RegisterAndEditPatient : SurezeComponentBase
 
     private bool _isEditingMode = false;
     private bool _isEditable = false;
+    private Validations _validations;
 
     [Parameter]
     public Guid? PatientId { get; set; }
@@ -73,9 +74,9 @@ public partial class RegisterAndEditPatient : SurezeComponentBase
 
     private async Task OnSaveEditClicked()
     {
-        if (!_isEditingMode)
+        if (await _validations.ValidateAll())
         {
-            //to register a new patient
+            
             var model = ObjectMapper.Map<PatientDto, CreateUpdatePatientDto>(Patient);
 
             if (Patient.ProfilePictureUrl.IsNullOrWhiteSpace())
@@ -83,9 +84,25 @@ public partial class RegisterAndEditPatient : SurezeComponentBase
                 Patient.ProfilePictureUrl = $"{WebHostEnvironment.WebRootPath}\\images\\profiles\\images\\default_profile_man.png";
             }
 
-            await PatientsService.CreateAsync(model);
+            if (!_isEditingMode)
+            {
+                //to register a new patient
+                await PatientsService.CreateAsync(model);
 
-            //alert user
+                //alert user
+            }
+            else
+            {
+                //to register a new patient
+                await PatientsService.UpdateAsync(Patient.Id, model);
+            }
         }
+
+    }
+
+    private void ValidateImageUploader(ValidatorEventArgs e)
+    {
+        e.ErrorText = null;
+        e.Status = ValidationStatus.Success;
     }
 }
