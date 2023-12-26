@@ -1,0 +1,13 @@
+﻿@using Volo.Abp.AspNetCore.Components.Web.LeptonXLiteTheme.Themes.LeptonXLite;
+@using Volo.Abp.DependencyInjection
+
+@inherits Branding
+@attribute [ExposeServices(typeof(Branding))]
+@attribute [Dependency(ReplaceServices = true)]
+
+<Image Width="Width.Px(25)" Source="images/logo/leptonx/logo-dark-thumbnail.png"></Image>
+@Name
+
+@code {
+    string Name = "Sureze";
+}
