@@ -3,13 +3,9 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 
-using Sureze.Migrations;
-
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
-using static Volo.Abp.Identity.Settings.IdentitySettingNames;
 
 namespace Sureze.Blazor.Pages.Patients;
 
@@ -81,20 +77,23 @@ public partial class RegisterAndEditPatient : SurezeComponentBase
 
             if (Patient.ProfilePictureUrl.IsNullOrWhiteSpace())
             {
-                Patient.ProfilePictureUrl = $"{WebHostEnvironment.WebRootPath}\\images\\profiles\\images\\default_profile_man.png";
+                Patient.ProfilePictureUrl = $"{WebHostEnvironment.WebRootPath}\\images\\default_profile_man.png";
             }
 
             if (!_isEditingMode)
             {
                 //to register a new patient
                 await PatientsService.CreateAsync(model);
-
+                await Notify.Success("Patient was created successfully");
+                NavigationManager.NavigateTo("/Patients");
                 //alert user
             }
             else
             {
                 //to register a new patient
                 await PatientsService.UpdateAsync(Patient.Id, model);
+
+                await Notify.Success("Patient was edited successfully");
             }
         }
 
