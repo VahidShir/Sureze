@@ -3,6 +3,8 @@ using Blazorise.DataGrid;
 
 using Microsoft.AspNetCore.Components;
 
+using Polly;
+
 using Sureze.Patients;
 
 using System;
@@ -18,6 +20,9 @@ public partial class Index : SurezeComponentBase
 {
     [Inject]
     public IPatientsService PatientsService { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
 
     private DataGrid<PatientDto> _dataGrid;
 
@@ -127,5 +132,10 @@ public partial class Index : SurezeComponentBase
             return true;
 
         return model.FullName?.Contains(_globalPatientNameFilterValue, StringComparison.OrdinalIgnoreCase) == true;
+    }
+
+    private void OnViewDetailsClicked(PatientDto patient)
+    {
+        NavigationManager.NavigateTo($"/EditPatient/{patient.Id}");
     }
 }

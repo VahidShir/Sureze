@@ -12,5 +12,6 @@ public class SurezeApplicationAutoMapperProfile : Profile
 
         CreateMap<Patient, PatientDto>();
         CreateMap<CreateUpdatePatientDto, Patient>();
+        CreateMap<CreateUpdatePatientDto, PatientDto>().ReverseMap();
     }
 }

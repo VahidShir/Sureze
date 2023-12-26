@@ -52,13 +52,13 @@
                 <DataGrid TItem="PatientDto"
                           Data="Patients"
                           @ref="_dataGrid"
-                          FixedColumns="true"
                           ReadData="OnDataGridReadAsync"
                           TotalItems="TotalCount"
                           ShowPager="true"
                           Sortable="true"
                           Filterable="@AdvancedSearch"
                           @bind-PageSize="@PageSize"
+                          Responsive="true"
                           ShowPageSizes="true">
                     <DataGridColumns>
                         <DataGridColumn TItem="PatientDto"
@@ -70,11 +70,11 @@
                             <DisplayTemplate>
                                 @if (string.IsNullOrWhiteSpace(context.ProfilePictureUrl))
                                 {
-                                    <Image Source="@(context.Sex == Sex.Male ? "images/default_profile_man.png" : "images/default_profile_woman.png")" Width="Width.Is25" Margin="Margin.Is1" Text="default profile picture"></Image>
+                                    <Image Source="@(context.Sex == Sex.Male ? "images/default_profile_man.png" : "images/default_profile_woman.png")" Width="Width.Px(50)" Margin="Margin.Is1" Text="default profile picture"></Image>
                                 }
                                 else
                                 {
-                                    <Image Source="@context.ProfilePictureUrl" Width="Width.Is25" Margin="Margin.Is1" Text="user's' profile picture"></Image>
+                                    <Image Source="@context.ProfilePictureUrl" Width="Width.Px(50)" Margin="Margin.Is1" Text="user's' profile picture"></Image>
                                 }
 
                                 @context.FullName
@@ -107,7 +107,18 @@
                                 @context.Nationality.GetDisplayName()
                             </DisplayTemplate>
                         </DataGridColumn>
-
+                        
+                        <DataGridEntityActionsColumn TItem="PatientDto">
+                            <DisplayTemplate>
+                                
+                                <EntityActions TItem="PatientDto">
+                                    <EntityAction TItem="PatientDto"
+                                                  Text="@L["View details"]"
+                                                  Clicked="() => OnViewDetailsClicked(context)"/>
+                                </EntityActions>
+                            </DisplayTemplate>
+                        </DataGridEntityActionsColumn>
+                       
                     </DataGridColumns>
                 </DataGrid>
             </CardBody>

@@ -37,7 +37,7 @@ public class CreateUpdatePatientDto
 
     public EducationLevel EducationLevel { get; set; }
 
-    public string Nationality { get; set; }
+    public Country Nationality { get; set; }
 
     [Required]
     public bool Citizen { get; set; }

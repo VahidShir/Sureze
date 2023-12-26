@@ -52,6 +52,9 @@ public class PatientsService :
                 .WhereIf(!filter.Nationality.IsNullOrWhiteSpace(), x => SearchEnum<Country>(filter.Nationality).Any( y => x.Nationality  == y))
                 .WhereIf(!filter.NationalIdNumber.IsNullOrWhiteSpace(), x => x.NationalIdNumber.ToLower().Contains(filter.NationalIdNumber));
 
+        //Get the total count
+        var totalCount = query.Count();
+
         // apply sorting
         if (!input.Sorting.IsNullOrWhiteSpace())
         {
@@ -67,9 +70,6 @@ public class PatientsService :
 
         //Convert the query result to a list of PatientDto objects
         var patientDtos = queryResult.Select(p => ObjectMapper.Map<Patient, PatientDto>(p)).ToList();
-
-        //Get the total count with another query
-        var totalCount = patientDtos.Count;
 
         return new PagedResultDto<PatientDto>(
             totalCount: totalCount,

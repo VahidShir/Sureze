@@ -62,4 +62,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\profiles\" />
+  </ItemGroup>
+
 </Project>

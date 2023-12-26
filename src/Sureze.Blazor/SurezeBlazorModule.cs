@@ -118,6 +118,8 @@ public class SurezeBlazorModule : AbpModule
         ConfigureBlazorise(context);
         ConfigureRouter(context);
         ConfigureMenu(context);
+
+        context.Services.AddSingleton<IFileUploader, FileUploader>();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

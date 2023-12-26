@@ -5,13 +5,6 @@ namespace Sureze;
 
 public enum Country
 {
-    /// <summary>
-    /// The default when the country is not set
-    /// </summary>
-
-    [Display(Name="")]
-    NotSet = 0,
-
     [Display(Name="Afghanistan")] AF = 1,
     [Display(Name="Åland Islands")] AX = 2,
     [Display(Name="Albania")] AL = 3,

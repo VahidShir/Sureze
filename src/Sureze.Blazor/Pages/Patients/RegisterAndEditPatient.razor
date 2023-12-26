@@ -1,0 +1,260 @@
+﻿@page "/RegisterPatient"
+@page "/EditPatient/{patientId:guid}"
+
+@inherits SurezeComponentBase
+@using Sureze.Blazor.Pages.Patients
+
+<Row Gap="Gap.Is2" Width="Width.Is100" Height="Height.Is100">
+    <Column ColumnSize="ColumnSize.Is2" Padding="Padding.Is1">
+        <Card Flex="Flex.AlignItems.Center" Height="Height.Is50" Padding="Padding.Is1">
+            <Figure Size="FigureSize.Is128x128">
+                <FigureImage Source="@(Patient.ProfilePictureUrl.IsNullOrWhiteSpace() ? "images/default_profile_man.png" : Patient.ProfilePictureUrl)" AlternateText="profile picture" Rounded />
+                 <FigureCaption TextSize="TextSize.Large" TextAlignment="TextAlignment.Center">@Patient.FullName</FigureCaption>
+                </Figure>
+            </Card>
+        </Column>
+        <Column Padding="Padding.Is1">
+            <Card Padding="Padding.Is3">
+
+                @if (_isEditingMode)
+            {
+                <h3>Patient details</h3>
+            }
+            else
+            {
+                <h3>Register Patient</h3>
+            }
+
+            <Row>
+                <Column ColumnSize="ColumnSize.IsHalf">
+                    <Field>
+                        <FieldLabel>Title</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Title">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<Title>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+
+                <Column ColumnSize="ColumnSize.IsHalf">
+                    <Field>
+                        <FieldLabel>Suffix</FieldLabel>
+                        <TextEdit @bind-Text="@Patient.Suffix"></TextEdit>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>First Name <span style="color:red">*</span> </FieldLabel>
+                        <TextEdit @bind-Text="@Patient.FirstName"></TextEdit>
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Last Name</FieldLabel>
+                        <TextEdit @bind-Text="@Patient.LastName"></TextEdit>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Field>
+                    <FieldLabel>National ID. Number</FieldLabel>
+                    <TextEdit @bind-Text="@Patient.NationalIdNumber"></TextEdit>
+                </Field>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>Alternate ID. Number</FieldLabel>
+                        <TextEdit @bind-Text="@Patient.AlternateIdNumber"></TextEdit>
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Alternate ID. Type</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.AlternateIdType">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<AlternateIdType>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>Date of Birth</FieldLabel>
+                        <DateEdit TValue="DateTime?" @bind-Date="@Patient.DateOfBirth" InputFormat="DD/MM/YYYY" Placeholder="DD/MM/YYYY" />
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Sex</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Sex">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<Sex>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>Race <span style="color:red">*</span></FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Race">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<Race>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Language</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Language">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<Language>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>Ethnicity</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Ethnicity">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<Ethnicity>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Education Level</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.EducationLevel">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<EducationLevel>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>Nationality</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Nationality">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<Country>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Citizen <span style="color:red">*</span></FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Citizen">
+                            <SelectItem>Choose an option</SelectItem>
+                            <SelectItem Value="true">Yes</SelectItem>
+                            <SelectItem Value="false">No</SelectItem>
+                        </Select>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>Religion</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.Religion">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<Religion>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Marital Status</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.MaritalStatus">
+                            <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<MaritalStatus>())
+                            {
+                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Column>
+            </Row>
+
+            <Row>
+                <Column>
+                    <Field>
+                        <FieldLabel>Patient Category</FieldLabel>
+                        <Select @bind-SelectedValue="@Patient.PatientCategory">
+                            @* <SelectItem>Choose an option</SelectItem>
+                            @foreach (var item in Enum.GetValues<PatientCategory>())
+                            {
+                            <SelectItem>@item.GetDisplayName()</SelectItem>
+                            } *@
+                        </Select>
+                    </Field>
+                </Column>
+
+                <Column>
+                    <Field>
+                        <FieldLabel>Profile Picture</FieldLabel>
+                        <FileEdit Filter="image/*" DisableProgressReport Changed="@OnProfileUploadChanged" />
+                     </Field>
+                 </Column>
+             </Row>
+
+             <Row Display="Display.Flex" Flex="Flex.JustifyContent.Between">
+                 <Column ColumnSize="ColumnSize.IsAuto" Flex="Flex.AlignItems.Start">
+                     <Button Color="Color.Secondary" Size="Size.Small" Clicked="@( () => NavigationManager.NavigateTo("/Patients"))">Back</Button>
+                 </Column>
+                 <Column ColumnSize="ColumnSize.IsAuto" Flex="Flex.AlignItems.End">
+                     <Button Color="Color.Secondary" Size="Size.Small" Clicked="@OnSaveEditClicked">@(_isEditingMode ? "Edit" : "Save")</Button>
+                 </Column>
+             </Row>
+         </Card>
+     </Column>
+ </Row>
+
