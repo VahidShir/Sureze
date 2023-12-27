@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 
 using System;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 
 namespace Sureze.Blazor.Pages.Patients;
@@ -30,7 +31,7 @@ public partial class RegisterAndEditPatient : SurezeComponentBase
     [Inject]
     public IFileUploader FileUploader { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (PatientId is not null)
         {
@@ -42,6 +43,8 @@ public partial class RegisterAndEditPatient : SurezeComponentBase
         {
             _isEditingMode = false;
         }
+
+        StateHasChanged();
     }
 
     [Inject] IMessageService MessageService { get; set; }
