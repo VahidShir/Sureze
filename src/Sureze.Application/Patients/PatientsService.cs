@@ -40,20 +40,29 @@ public class PatientsService :
         // normalize input
         NormalizeInputFilter(filter);
 
-        Expression<Func<Patient, bool>> fullNamePredicate = x =>
-                                x.FirstName.ToLower().Contains(filter.FullName)
-                                || x.LastName.ToLower().Contains(filter.FullName);
+        Expression<Func<Patient, bool>> fullNamePredicate = x => (x.FirstName + " " + x.LastName).ToLower().Contains(filter.FullName);
 
         // apply filter
         var query = queryable
                 .WhereIf(!filter.FullName.IsNullOrWhiteSpace(), fullNamePredicate)
                 .WhereIf(filter.DateOfBirth is not null, x => x.DateOfBirth == filter.DateOfBirth)
-                .WhereIf(!filter.Sex.IsNullOrWhiteSpace(), x => SearchEnum<Sex>(filter.Nationality).Any( y => x.Sex  == y))
-                .WhereIf(!filter.Nationality.IsNullOrWhiteSpace(), x => SearchEnum<Country>(filter.Nationality).Any( y => x.Nationality  == y))
+                .WhereIf(!filter.Sex.IsNullOrWhiteSpace(), x => SearchEnum<Sex>(filter.Nationality).Any(y => x.Sex == y))
+                .WhereIf(!filter.Nationality.IsNullOrWhiteSpace(), x => SearchEnum<Country>(filter.Nationality).Any(y => x.Nationality == y))
                 .WhereIf(!filter.NationalIdNumber.IsNullOrWhiteSpace(), x => x.NationalIdNumber.ToLower().Contains(filter.NationalIdNumber));
+
+        try
+        {
+            var totalCount2 = query.Count();
+        }
+        catch (Exception eeee)
+        {
+
+            throw;
+        }
 
         //Get the total count
         var totalCount = query.Count();
+
 
         // apply sorting
         if (!input.Sorting.IsNullOrWhiteSpace())
@@ -65,6 +74,15 @@ public class PatientsService :
         query = query.Skip(input.SkipCount)
                 .Take(input.MaxResultCount);
 
+        try
+        {
+            var queryResult2 = await AsyncExecuter.ToListAsync(query);
+        }
+        catch (Exception e)
+        {
+
+            throw;
+        }
         //Execute the query and get a list
         var queryResult = await AsyncExecuter.ToListAsync(query);
 
