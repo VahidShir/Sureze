@@ -50,19 +50,8 @@ public class PatientsService :
                 .WhereIf(!filter.Nationality.IsNullOrWhiteSpace(), x => SearchEnum<Country>(filter.Nationality).Any(y => x.Nationality == y))
                 .WhereIf(!filter.NationalIdNumber.IsNullOrWhiteSpace(), x => x.NationalIdNumber.ToLower().Contains(filter.NationalIdNumber));
 
-        try
-        {
-            var totalCount2 = query.Count();
-        }
-        catch (Exception eeee)
-        {
-
-            throw;
-        }
-
         //Get the total count
         var totalCount = query.Count();
-
 
         // apply sorting
         if (!input.Sorting.IsNullOrWhiteSpace())
@@ -74,15 +63,6 @@ public class PatientsService :
         query = query.Skip(input.SkipCount)
                 .Take(input.MaxResultCount);
 
-        try
-        {
-            var queryResult2 = await AsyncExecuter.ToListAsync(query);
-        }
-        catch (Exception e)
-        {
-
-            throw;
-        }
         //Execute the query and get a list
         var queryResult = await AsyncExecuter.ToListAsync(query);
 
