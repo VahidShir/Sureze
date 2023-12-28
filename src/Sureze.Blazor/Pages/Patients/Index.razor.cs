@@ -34,6 +34,7 @@ public partial class Index : SurezeComponentBase
 
     private string _globalPatientNameFilterValue;
 
+    private List<object> SexItems = Enum.GetValues<Sex>().Select(x => (object)x).ToList();
     private bool AdvancedSearch { get; set; }
 
     private string CurrentSorting { get; set; }
@@ -62,6 +63,7 @@ public partial class Index : SurezeComponentBase
 
                 MaxResultCount = PageSize,
                 SkipCount = CurrentPage * PageSize,
+
                 Sorting = CurrentSorting,
                 PatientFilter = CurrentFilter,
             }
@@ -99,7 +101,17 @@ public partial class Index : SurezeComponentBase
             }
             if (column.SortField == nameof(PatientDto.Sex))
             {
-                CurrentFilter.Sex = searchValue;
+
+                bool result = Enum.TryParse<Sex>(searchValue, ignoreCase: true, out var searchedSex);
+
+                if (result && searchedSex != Sex.NotSet)
+                {
+                    CurrentFilter.Sex = searchedSex;
+                }
+                else
+                {
+                    CurrentFilter.Sex = null;
+                }
             }
             if (column.SortField == nameof(PatientDto.NationalIdNumber))
             {

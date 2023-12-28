@@ -93,11 +93,13 @@
                                         Caption="ID. Number">
                         </DataGridColumn>
 
-                        <DataGridColumn TItem="PatientDto"
-                                        Filterable="true"
-                                        Field="@nameof(PatientDto.Sex)"
-                                        Caption="Sex">
-                        </DataGridColumn>
+                        <DataGridSelectColumn TItem="PatientDto"
+                                              Filterable="true"
+                                              Field="@nameof(PatientDto.Sex)"
+                                              Caption="Sex"
+                                              Data="@SexItems"
+                                              ValueField="(x) => ((Sex)x)"
+                                              TextField="(x) => ((Sex)x).GetDisplayName()" />
 
                         <DataGridColumn TItem="PatientDto"
                                         Filterable="true"
@@ -107,18 +109,18 @@
                                 @context.Nationality.GetDisplayName()
                             </DisplayTemplate>
                         </DataGridColumn>
-                        
+
                         <DataGridEntityActionsColumn TItem="PatientDto">
                             <DisplayTemplate>
-                                
+
                                 <EntityActions TItem="PatientDto">
                                     <EntityAction TItem="PatientDto"
                                                   Text="@L["View details"]"
-                                                  Clicked="() => OnViewDetailsClicked(context)"/>
+                                                  Clicked="() => OnViewDetailsClicked(context)" />
                                 </EntityActions>
                             </DisplayTemplate>
                         </DataGridEntityActionsColumn>
-                       
+
                     </DataGridColumns>
                 </DataGrid>
             </CardBody>

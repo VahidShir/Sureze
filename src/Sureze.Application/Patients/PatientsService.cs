@@ -46,7 +46,7 @@ public class PatientsService :
         var query = queryable
                 .WhereIf(!filter.FullName.IsNullOrWhiteSpace(), fullNamePredicate)
                 .WhereIf(filter.DateOfBirth is not null, x => x.DateOfBirth == filter.DateOfBirth)
-                .WhereIf(!filter.Sex.IsNullOrWhiteSpace(), x => SearchEnum<Sex>(filter.Nationality).Any(y => x.Sex == y))
+                .WhereIf(filter.Sex is not null, x => x.Sex == filter.Sex)
                 .WhereIf(!filter.Nationality.IsNullOrWhiteSpace(), x => SearchEnum<Country>(filter.Nationality).Any(y => x.Nationality == y))
                 .WhereIf(!filter.NationalIdNumber.IsNullOrWhiteSpace(), x => x.NationalIdNumber.ToLower().Contains(filter.NationalIdNumber));
 
@@ -78,13 +78,15 @@ public class PatientsService :
     private static void NormalizeInputFilter(PatientFilter filter)
     {
         filter.FullName = filter.FullName?.ToLower();
-        filter.Sex = filter.Sex?.ToLower();
         filter.NationalIdNumber = filter.NationalIdNumber?.ToLower();
         filter.Nationality = filter.Nationality?.ToLower();
     }
 
     private static List<T> SearchEnum<T>(string searchValue) where T : struct, Enum
     {
+        if(searchValue.IsNullOrWhiteSpace())
+            return Enumerable.Empty<T>().ToList();
+
         var result = Enum.GetValues<T>().ToList().FindAll(c => c.GetDisplayName().ToLower().Contains(searchValue.ToLower()));
         return result;
     }
