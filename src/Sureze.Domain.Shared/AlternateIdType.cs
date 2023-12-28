@@ -4,6 +4,9 @@ namespace Sureze;
 
 public enum AlternateIdType
 {
+    [Display(Name = "")]
+    NotSet,
+
     [Display(Name = "MyKad")]
     MyKad,
 

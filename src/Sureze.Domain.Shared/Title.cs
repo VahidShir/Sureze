@@ -4,6 +4,9 @@ namespace Sureze;
 
 public enum Title
 {
+    [Display(Name = "")]
+    NotSet,
+
     [Display(Name = "Baby of")]
     BabyOf,
 
@@ -80,7 +83,7 @@ public enum Title
     DatoSeri,
 
     [Display(Name = "Dato Sri ")]
-    DatoSri ,
+    DatoSri,
 
     [Display(Name = "Datu")]
     Datu,

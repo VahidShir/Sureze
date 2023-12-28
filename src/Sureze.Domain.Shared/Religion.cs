@@ -4,6 +4,9 @@ namespace Sureze;
 
 public enum Religion
 {
+    [Display(Name = "")]
+    NotSet,
+
     [Display(Name = "MAKLUMAT TIADA")]
     MAKLUMAT_TIADA,
 

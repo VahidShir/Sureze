@@ -4,6 +4,9 @@ namespace Sureze;
 
 public enum MaritalStatus
 {
+    [Display(Name = "")]
+    NotSet,
+
     [Display(Name = "Single")]
     Single,
 

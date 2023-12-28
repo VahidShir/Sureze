@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 namespace Sureze;
 public enum Race
 {
+    [Display(Name = "")]
+    NotSet,
+
     [Display(Name = "MALAY")]
     Malay,
 

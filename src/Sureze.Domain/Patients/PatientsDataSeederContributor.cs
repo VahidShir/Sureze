@@ -47,15 +47,15 @@ public class PatientsDataSeederContributor : IDataSeedContributor, ITransientDep
             Patient patient = new(id: _guidGenerator.Create(), firstName, race, citizen)
             {
                 Nationality = GetRandomEnumValue<Country>(),
-                AlternateIdNumber = _rnd.Next(30).ToString(),
+                AlternateIdNumber = _rnd.Next(int.MaxValue).ToString(),
                 LastName = personGenerator.GenerateRandomLastName(),
                 Language = GetRandomEnumValue<Language>(),
                 MaritalStatus = GetRandomEnumValue<MaritalStatus>(),
                 Ethnicity = GetRandomEnumValue<Ethnicity>(),
                 EducationLevel = GetRandomEnumValue<EducationLevel>(),
-                //DateOfBirth = ??,
+                DateOfBirth = GenerateRandomDateTime(),
                 AlternateIdType = GetRandomEnumValue<AlternateIdType>(),
-                NationalIdNumber = _rnd.Next(30).ToString(),
+                NationalIdNumber = _rnd.Next(int.MaxValue).ToString(),
                 PatientCategory = "",
                 Religion = GetRandomEnumValue<Religion>(),
                 Sex = GetRandomEnumValue<Sex>(),
@@ -73,8 +73,15 @@ public class PatientsDataSeederContributor : IDataSeedContributor, ITransientDep
     {
         var enumCount = Enum.GetNames<T>().Length;
 
-        int randomN = _rnd.Next(enumCount);
+        int randomN = _rnd.Next(1, enumCount);
 
         return (T)(object)randomN;
+    }
+
+    private DateTime GenerateRandomDateTime()
+    {
+        DateTime start = new DateTime(1960, 1, 1);
+        int days = 50 * 12 * 30; // number od days: years * months * days
+        return start.AddDays(_rnd.Next(days));
     }
 }

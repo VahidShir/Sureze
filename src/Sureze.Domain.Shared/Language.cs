@@ -4,6 +4,8 @@ namespace Sureze;
 
 public enum Language
 {
+    [Display(Name = "")]
+    NotSet,
     [Display(Name = "English")]
     English,
     [Display(Name = "Malay")]

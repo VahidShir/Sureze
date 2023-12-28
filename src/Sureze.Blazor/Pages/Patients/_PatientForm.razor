@@ -34,10 +34,16 @@
                                     <FieldLabel>Title</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.Title">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<Title>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if(item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -123,10 +129,16 @@
                                     <FieldLabel>Alternate ID. Type</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.AlternateIdType">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<AlternateIdType>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -158,10 +170,16 @@
                                     <FieldLabel>Sex</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.Sex">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<Sex>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -180,10 +198,16 @@
                                     <FieldLabel>Race <span style="color:red">*</span></FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.Race">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<Race>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -200,10 +224,16 @@
                                     <FieldLabel>Language</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.Language">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<Language>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -222,10 +252,16 @@
                                     <FieldLabel>Ethnicity</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.Ethnicity">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<Ethnicity>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -242,10 +278,16 @@
                                     <FieldLabel>Education Level</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.EducationLevel">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<EducationLevel>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -264,10 +306,16 @@
                                     <FieldLabel>Nationality</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.Nationality">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<Country>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -304,10 +352,16 @@
                                     <FieldLabel>Religion</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.Religion">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<Religion>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>
@@ -324,10 +378,16 @@
                                     <FieldLabel>Marital Status</FieldLabel>
                                     <Select @bind-SelectedValue="@Patient.MaritalStatus">
                                         <ChildContent>
-                                            <SelectItem>Choose an option</SelectItem>
                                             @foreach (var item in Enum.GetValues<MaritalStatus>())
                                             {
-                                                <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                if (item.ToString() == "NotSet")
+                                                {
+                                                    <SelectItem Value="@item">Choose an option</SelectItem>
+                                                }
+                                                else
+                                                {
+                                                    <SelectItem Value="@item">@item.GetDisplayName()</SelectItem>
+                                                }
                                             }
                                         </ChildContent>
                                         <Feedback>

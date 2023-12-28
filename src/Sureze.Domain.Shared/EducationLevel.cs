@@ -4,6 +4,9 @@ namespace Sureze;
 
 public enum EducationLevel
 {
+    [Display(Name = "")]
+    NotSet,
+
     [Display(Name = "No Information")]
     NoInformation,
 

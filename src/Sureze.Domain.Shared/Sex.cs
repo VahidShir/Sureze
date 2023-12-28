@@ -4,6 +4,8 @@ namespace Sureze;
 
 public enum Sex
 {
+    [Display(Name = "")]
+    NotSet,
     [Display(Name = "Female")]
     Female,
     [Display(Name = "Male")]
