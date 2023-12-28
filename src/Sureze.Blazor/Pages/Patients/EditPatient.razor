@@ -1,0 +1,10 @@
+﻿@page "/EditPatient/{patientId:guid}"
+@inherits PatientBasePage
+
+
+<_PatientForm Patient="@Patient"
+    FormTitle="@FormTitle"
+    IsFormDisabled="@IsFormDisabled"
+    SaveButtonTitle="@SaveButtonTitle"
+    OnSaveButtonClicked="@OnSaveButtonClicked"
+    @ref="@_form" />
