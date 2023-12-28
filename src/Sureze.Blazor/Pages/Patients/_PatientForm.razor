@@ -91,7 +91,7 @@
                     </Row>
 
                     <Row>
-                        <Validation>
+                        <Validation Validator="NationalIdNumberValidator">
                             <Field>
                                 <FieldLabel>National ID. Number</FieldLabel>
                                 <TextEdit @bind-Text="@Patient.NationalIdNumber">
@@ -105,10 +105,16 @@
 
                     <Row>
                         <Column>
-                            <Field>
-                                <FieldLabel>Alternate ID. Number</FieldLabel>
-                                <TextEdit @bind-Text="@Patient.AlternateIdNumber"></TextEdit>
-                            </Field>
+                            <Validation>
+                                <Field>
+                                    <FieldLabel>Alternate ID. Number</FieldLabel>
+                                    <TextEdit @bind-Text="@Patient.AlternateIdNumber">
+                                        <Feedback>
+                                            <ValidationError />
+                                        </Feedback>
+                                    </TextEdit>
+                                </Field>
+                            </Validation>
                         </Column>
 
                         <Column>
@@ -413,6 +419,22 @@
         catch (Exception)
         {
             await Notify.Error("Error occured while uploading profile picture.");
+        }
+    }
+
+    private void NationalIdNumberValidator(ValidatorEventArgs e)
+    {
+        string nationalIdNumber = e.Value?.ToString();
+
+        if (nationalIdNumber.IsNullOrWhiteSpace() && Patient.AlternateIdNumber.IsNullOrWhiteSpace())
+        {
+            e.Status = ValidationStatus.Error;
+            e.ErrorText = "Either National ID. Number or Alternate ID. Number must be present.";
+        }
+        else
+        {
+            e.Status = ValidationStatus.Success;
+            e.ErrorText = null;
         }
     }
 }
